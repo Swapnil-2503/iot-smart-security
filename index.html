@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Home Security</title>
+    <style>
+        /* CSS styling for the interface */
+        .notification {
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Smart Home Security</h1>
+    <div id="notifications"></div>
+
+    <script>
+        const notificationsContainer = document.getElementById('notifications');
+
+        function fetchNotifications() {
+            fetch('http://localhost:3000/notifications')
+                .then(response => response.json())
+                .then(notifications => {
+                    notificationsContainer.innerHTML = '';
+
+                    notifications.forEach(notification => {
+                        const notificationElement = document.createElement('div');
+                        notificationElement.classList.add('notification');
+                        notificationElement.textContent = notification.message;
+                        notificationsContainer.appendChild(notificationElement);
+                    });
+                })
+                .catch(error => console.error(error));
+        }
+
+        fetchNotifications();
+        setInterval(fetchNotifications, 5000);
+    </script>
+</body>
+</html>
